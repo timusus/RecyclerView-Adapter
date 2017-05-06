@@ -1,6 +1,7 @@
 package com.simplecity.recycleradapter.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.simplecity.recycleradapter.App;
 import com.simplecity.recycleradapter.R;
+import com.simplecity.recycleradapter.model.CryptoCurrency;
 import com.simplecity.recycleradapter.ui.adapter.SectionedAdapter;
 import com.simplecity.recycleradapter.ui.presenter.CryptoPresenter;
 import com.simplecity.recycleradapter.ui.view.CryptoView;
@@ -86,5 +88,13 @@ public class CryptoActivity extends AppCompatActivity implements CryptoView {
     @Override
     public void showErrorMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showPopup(CryptoCurrency cryptoCurrency) {
+        new AlertDialog.Builder(this)
+                .setTitle(String.format("%s. %s", cryptoCurrency.rank, cryptoCurrency.symbol))
+                .setMessage(String.format("-Name: %s\n-Market cap: $%s", cryptoCurrency.name, cryptoCurrency.marketCap))
+                .show();
     }
 }

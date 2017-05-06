@@ -8,7 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface CryptoCompareApi {
+public interface CoinMarketCapApi {
 
     @GET("v1/ticker/")
     Call<List<CryptoCurrency>> getCoinList(@Query("limit") int limit);

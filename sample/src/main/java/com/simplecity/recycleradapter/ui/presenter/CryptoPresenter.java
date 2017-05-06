@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.simplecity.recycleradapter.App;
 import com.simplecity.recycleradapter.model.CryptoCurrency;
-import com.simplecity.recycleradapter.network.CryptoCompareApi;
+import com.simplecity.recycleradapter.network.CoinMarketCapApi;
 import com.simplecity.recycleradapter.ui.view.CryptoView;
 import com.simplecity.recycleradapter.ui.viewmodel.CryptoViewModel;
 import com.simplecity.recycleradapter.ui.viewmodel.SubheaderView;
@@ -23,7 +23,7 @@ import retrofit2.Response;
 
 public class CryptoPresenter extends Presenter<CryptoView> {
 
-    @Inject CryptoCompareApi cryptoCompareApi;
+    @Inject CoinMarketCapApi coinMarketCapApi;
 
     public CryptoPresenter(Context context) {
         ((App) context).getAppComponent().inject(this);
@@ -36,7 +36,7 @@ public class CryptoPresenter extends Presenter<CryptoView> {
             view.showLoading();
         }
 
-        cryptoCompareApi.getCoinList(100).enqueue(new Callback<List<CryptoCurrency>>() {
+        coinMarketCapApi.getCoinList(100).enqueue(new Callback<List<CryptoCurrency>>() {
             @Override
             public void onResponse(Call<List<CryptoCurrency>> call, Response<List<CryptoCurrency>> response) {
 
@@ -48,12 +48,15 @@ public class CryptoPresenter extends Presenter<CryptoView> {
                     if (response.code() != 200) {
                         view.showErrorMessage(String.format("Error: %d", response.code()));
                     } else {
-
                         List<ViewModel> viewModels = new ArrayList<>();
                         viewModels.add(new SubheaderView("Top 100"));
                         viewModels.addAll(response.body()
                                 .stream()
-                                .map(CryptoViewModel::new)
+                                .map(cryptoCurrency -> {
+                                    CryptoViewModel cryptoViewModel = new CryptoViewModel(cryptoCurrency);
+                                    cryptoViewModel.setListener(view::showPopup);
+                                    return cryptoViewModel;
+                                })
                                 .collect(Collectors.toList()));
                         view.showViewModels(viewModels);
                     }

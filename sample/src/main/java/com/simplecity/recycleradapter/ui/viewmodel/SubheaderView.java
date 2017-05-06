@@ -1,7 +1,5 @@
 package com.simplecity.recycleradapter.ui.viewmodel;
 
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,12 +19,6 @@ public class SubheaderView extends BaseViewModel<String, SubheaderView.ViewHolde
         this.title = title;
     }
 
-    @Nullable
-    @Override
-    public String getItem() {
-        return title;
-    }
-
     @Override
     public int getViewType() {
         return getLayoutResId();
@@ -39,7 +31,7 @@ public class SubheaderView extends BaseViewModel<String, SubheaderView.ViewHolde
 
     @Override
     public SubheaderView.ViewHolder createViewHolder(ViewGroup parent) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false));
+        return new ViewHolder(createView(parent));
     }
 
     @Override

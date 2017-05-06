@@ -2,7 +2,7 @@ package com.simplecity.recycleradapter.dagger;
 
 import android.util.Log;
 
-import com.simplecity.recycleradapter.network.CryptoCompareApi;
+import com.simplecity.recycleradapter.network.CoinMarketCapApi;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -35,7 +35,6 @@ public class NetworkModule {
     @Provides
     @Singleton
     Converter.Factory provideGsonConverter() {
-//        Gson gson = new GsonBuilder().registerTypeAdapter(CoinListResponse.class, new CryptoDeserializer()).create();
         return GsonConverterFactory.create();
     }
 
@@ -55,9 +54,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(Proxy proxy, Interceptor interceptor) {
+    OkHttpClient provideOkHttpClient(Interceptor interceptor) {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
-//        client.proxy(proxy);
         client.addInterceptor(interceptor);
         return client.build();
     }
@@ -74,8 +72,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    CryptoCompareApi provideCryptoCompareApi(Retrofit retrofit) {
-        return retrofit.create(CryptoCompareApi.class);
+    CoinMarketCapApi provideCryptoCompareApi(Retrofit retrofit) {
+        return retrofit.create(CoinMarketCapApi.class);
     }
 
 }

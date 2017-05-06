@@ -19,7 +19,5 @@ public interface ViewModel<T, H extends RecyclerView.ViewHolder> extends Content
 
     H createViewHolder(ViewGroup parent);
 
-    T getItem();
-
     int getSpanSize(int spanCount);
 }

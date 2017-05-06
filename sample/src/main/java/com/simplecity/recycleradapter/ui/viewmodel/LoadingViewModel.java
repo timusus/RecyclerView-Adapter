@@ -1,6 +1,5 @@
 package com.simplecity.recycleradapter.ui.viewmodel;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,7 +22,7 @@ public class LoadingViewModel extends BaseViewModel<String, LoadingViewModel.Vie
 
     @Override
     public ViewHolder createViewHolder(ViewGroup parent) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false));
+        return new ViewHolder(createView(parent));
     }
 
     static class ViewHolder extends BaseViewHolder<LoadingViewModel> {

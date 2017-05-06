@@ -1,8 +1,6 @@
 package com.simplecity.recycleradapter.ui.viewmodel;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,16 +17,20 @@ import butterknife.ButterKnife;
 
 public class CryptoViewModel extends BaseViewModel<CryptoCurrency, CryptoViewModel.ViewHolder> implements SectionedViewModel {
 
+    public interface ClickListener {
+        void onClick(CryptoCurrency cryptoCurrency);
+    }
+
     private CryptoCurrency cryptoCurrency;
+
+    private ClickListener listener;
 
     public CryptoViewModel(CryptoCurrency cryptoCurrency) {
         this.cryptoCurrency = cryptoCurrency;
     }
 
-    @Nullable
-    @Override
-    public CryptoCurrency getItem() {
-        return cryptoCurrency;
+    public void setListener(ClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -43,7 +45,7 @@ public class CryptoViewModel extends BaseViewModel<CryptoCurrency, CryptoViewMod
 
     @Override
     public ViewHolder createViewHolder(ViewGroup parent) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false));
+        return new ViewHolder(createView(parent));
     }
 
     @Override
@@ -65,6 +67,12 @@ public class CryptoViewModel extends BaseViewModel<CryptoCurrency, CryptoViewMod
         return cryptoCurrency.rank;
     }
 
+    void onClick() {
+        if (listener != null) {
+            listener.onClick(cryptoCurrency);
+        }
+    }
+
     static class ViewHolder extends BaseViewHolder<CryptoViewModel> {
 
         @BindView(R.id.image1)
@@ -83,6 +91,8 @@ public class CryptoViewModel extends BaseViewModel<CryptoCurrency, CryptoViewMod
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(v -> viewModel.onClick());
         }
 
         @Override
