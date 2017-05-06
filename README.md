@@ -8,8 +8,6 @@ Instead of writing an `Adapter` that needs to know which layout resource(s) to i
 
 This makes it easy to use the same `ItemAdapter` class whenever you have a `RecyclerView`.
 
-![Screenshot](art/screenshot.png)
-
 Creating headers and footers now becomes as simple as creating a `HeaderViewModel` and `FooterViewModel` class, and adding them to you dataset:
 
 ```java
@@ -126,6 +124,10 @@ adapter.setItems(viewModels);
 ```
 
 That's it! You can create as many different types of `ViewModels` as you wish. You no longer need to create `RecyclerView Adapters` to define how the items should be presented.
+
+Sample app screenshot:
+
+![Screenshot](art/screenshot.png)
 
 ##### License
 
