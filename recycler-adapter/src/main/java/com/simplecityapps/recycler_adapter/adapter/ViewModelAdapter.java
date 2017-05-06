@@ -1,5 +1,6 @@
 package com.simplecityapps.recycler_adapter.adapter;
 
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.util.ListUpdateCallback;
@@ -11,13 +12,9 @@ import com.simplecityapps.recycler_adapter.BuildConfig;
 import com.simplecityapps.recycler_adapter.model.ContentsComparator;
 import com.simplecityapps.recycler_adapter.model.ViewModel;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * A custom RecyclerView.Adapter used for adapting {@link ViewModel}'s.
@@ -75,41 +72,39 @@ public class ViewModelAdapter extends RecyclerView.Adapter {
      *
      * @param items the new dataset ({@link List<ViewModel>})
      */
-    public synchronized Subscription setItems(List<ViewModel> items) {
+    public synchronized void setItems(List<ViewModel> items) {
+
         if (this.items == items) {
-            return null;
+            return;
         }
 
-        return Observable.fromCallable(() -> DiffUtil.calculateDiff(new DiffCallback(this.items, items)))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(diffResult -> {
-                    ViewModelAdapter.this.items = items;
-                    diffResult.dispatchUpdatesTo(ViewModelAdapter.this);
+        new DiffResultTask(this.items, items, diffResult -> {
+            ViewModelAdapter.this.items = items;
+            diffResult.dispatchUpdatesTo(ViewModelAdapter.this);
 
-                    if (BuildConfig.DEBUG)
-                        diffResult.dispatchUpdatesTo(new ListUpdateCallback() {
-                            @Override
-                            public void onInserted(int position, int count) {
-                                Log.i(TAG, String.format("onInserted: position: %d, count: %d", position, count));
-                            }
+            if (BuildConfig.DEBUG)
+                diffResult.dispatchUpdatesTo(new ListUpdateCallback() {
+                    @Override
+                    public void onInserted(int position, int count) {
+                        Log.i(TAG, String.format("onInserted: position: %d, count: %d", position, count));
+                    }
 
-                            @Override
-                            public void onRemoved(int position, int count) {
-                                Log.i(TAG, String.format("onRemoved:position: %d, count: %d", position, count));
-                            }
+                    @Override
+                    public void onRemoved(int position, int count) {
+                        Log.i(TAG, String.format("onRemoved:position: %d, count: %d", position, count));
+                    }
 
-                            @Override
-                            public void onMoved(int fromPosition, int toPosition) {
-                                Log.i(TAG, String.format("onMoved: from: %d, to: %d", fromPosition, fromPosition));
-                            }
+                    @Override
+                    public void onMoved(int fromPosition, int toPosition) {
+                        Log.i(TAG, String.format("onMoved: from: %d, to: %d", fromPosition, fromPosition));
+                    }
 
-                            @Override
-                            public void onChanged(int position, int count, Object payload) {
-                                Log.i(TAG, String.format("onChanged: position: %d, count: %d", position, count));
-                            }
-                        });
+                    @Override
+                    public void onChanged(int position, int count, Object payload) {
+                        Log.i(TAG, String.format("onChanged: position: %d, count: %d", position, count));
+                    }
                 });
+        }).execute();
     }
 
     /**
@@ -235,6 +230,39 @@ public class ViewModelAdapter extends RecyclerView.Adapter {
         @Override
         public Object getChangePayload(int oldItemPosition, int newItemPosition) {
             return 0;
+        }
+    }
+
+    static class DiffResultTask extends AsyncTask<Void, Void, DiffUtil.DiffResult> {
+
+        interface Action0<R> {
+            void call(R result);
+        }
+
+        List<ViewModel> oldItems;
+        List<ViewModel> newItems;
+
+        WeakReference<Action0<DiffUtil.DiffResult>> callBackReference;
+
+        DiffResultTask(List<ViewModel> oldItems, List<ViewModel> newItems, Action0<DiffUtil.DiffResult> callBack) {
+            this.oldItems = oldItems;
+            this.newItems = newItems;
+            this.callBackReference = new WeakReference<>(callBack);
+        }
+
+        @Override
+        protected DiffUtil.DiffResult doInBackground(Void... voids) {
+            return DiffUtil.calculateDiff(new DiffCallback(oldItems, newItems));
+        }
+
+        @Override
+        protected void onPostExecute(DiffUtil.DiffResult diffResult) {
+            super.onPostExecute(diffResult);
+
+            Action0<DiffUtil.DiffResult> callback = callBackReference.get();
+            if (callback != null) {
+                callback.call(diffResult);
+            }
         }
     }
 }
