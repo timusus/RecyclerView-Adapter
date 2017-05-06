@@ -4,9 +4,7 @@
 
 This library is designed to help separate the creation and binding of views being adapted by a `RecyclerView Adapter`, from the `Adapter` itself.
 
-Instead of writing an `Adapter` that needs to know which layout resource(s) to inflate for the items, as well as binding logic and click listeners, this library allows you to write a `ViewModel` class which wraps your data model, defining how the view should be created, bound, how many spans it should take up, etc.
-
-This makes it easy to use the same `ItemAdapter` class whenever you have a `RecyclerView`.
+Instead of writing an `Adapter` that needs to know which layout resource(s) to inflate for the items, as well as binding logic and click listeners, this library allows you to write a `ViewModel` class which wraps your data model, defining how the view should be created, bound, how many spans it should take up, etc. You no longer need to write a `RecyclerView Adapter` class at all.
 
 Creating headers and footers now becomes as simple as creating a `HeaderViewModel` and `FooterViewModel` class, and adding them to you dataset:
 
