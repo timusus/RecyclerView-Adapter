@@ -8,12 +8,7 @@ import com.simplecityapps.recycler_adapter.model.BaseViewModel;
 import com.simplecityapps.recycler_adapter.recyclerview.BaseViewHolder;
 
 
-public class LoadingViewModel extends BaseViewModel<String, LoadingViewModel.ViewHolder> {
-
-    @Override
-    public int getViewType() {
-        return getLayoutResId();
-    }
+public class LoadingViewModel extends BaseViewModel<LoadingViewModel.ViewHolder> {
 
     @Override
     public int getLayoutResId() {

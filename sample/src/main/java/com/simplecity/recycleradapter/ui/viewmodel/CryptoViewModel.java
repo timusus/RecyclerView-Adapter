@@ -15,7 +15,7 @@ import com.simplecityapps.recycler_adapter.recyclerview.BaseViewHolder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CryptoViewModel extends BaseViewModel<CryptoCurrency, CryptoViewModel.ViewHolder> implements SectionedViewModel {
+public class CryptoViewModel extends BaseViewModel<CryptoViewModel.ViewHolder> implements SectionedViewModel {
 
     public interface ClickListener {
         void onClick(CryptoCurrency cryptoCurrency);
@@ -31,11 +31,6 @@ public class CryptoViewModel extends BaseViewModel<CryptoCurrency, CryptoViewMod
 
     public void setListener(ClickListener listener) {
         this.listener = listener;
-    }
-
-    @Override
-    public int getViewType() {
-        return getLayoutResId();
     }
 
     @Override

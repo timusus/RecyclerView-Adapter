@@ -11,17 +11,12 @@ import com.simplecityapps.recycler_adapter.recyclerview.BaseViewHolder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SubheaderView extends BaseViewModel<String, SubheaderView.ViewHolder> {
+public class SubheaderView extends BaseViewModel<SubheaderView.ViewHolder> {
 
     private String title;
 
     public SubheaderView(String title) {
         this.title = title;
-    }
-
-    @Override
-    public int getViewType() {
-        return getLayoutResId();
     }
 
     @Override
