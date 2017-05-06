@@ -1,4 +1,4 @@
-### Recycler Adapter
+### RecyclerView Adapter
 
 [![License](http://img.shields.io/badge/license-APACHE2-blue.svg)](NOTICE)
 
