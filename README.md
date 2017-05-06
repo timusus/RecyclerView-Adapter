@@ -10,7 +10,7 @@ This makes it easy to use the same `ItemAdapter` class whenever you have a `Recy
 
 Creating headers and footers now becomes as simple as creating a `HeaderViewModel` and `FooterViewModel` class, and adding them to you dataset:
 
-```
+``` java
 List<ViewModel> items = new ArrayList<>();
 
 items.add(headerViewModel);
