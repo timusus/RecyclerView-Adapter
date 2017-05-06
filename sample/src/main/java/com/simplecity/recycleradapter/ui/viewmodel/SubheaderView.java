@@ -10,18 +10,21 @@ import com.simplecity.recycleradapter.R;
 import com.simplecityapps.recycler_adapter.model.BaseViewModel;
 import com.simplecityapps.recycler_adapter.recyclerview.BaseViewHolder;
 
-public class ItemViewModel extends BaseViewModel<String, ItemViewModel.ViewHolder> {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private String text;
+public class SubheaderView extends BaseViewModel<String, SubheaderView.ViewHolder> {
 
-    public ItemViewModel(String text) {
-        this.text = text;
+    private String title;
+
+    public SubheaderView(String title) {
+        this.title = title;
     }
 
     @Nullable
     @Override
     public String getItem() {
-        return text;
+        return title;
     }
 
     @Override
@@ -31,11 +34,11 @@ public class ItemViewModel extends BaseViewModel<String, ItemViewModel.ViewHolde
 
     @Override
     public int getLayoutResId() {
-        return R.layout.list_item;
+        return R.layout.list_item_subheader;
     }
 
     @Override
-    public ViewHolder createViewHolder(ViewGroup parent) {
+    public SubheaderView.ViewHolder createViewHolder(ViewGroup parent) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false));
     }
 
@@ -43,18 +46,7 @@ public class ItemViewModel extends BaseViewModel<String, ItemViewModel.ViewHolde
     public void bindView(ViewHolder holder) {
         super.bindView(holder);
 
-        holder.textView.setText(text);
-    }
-
-    static class ViewHolder extends BaseViewHolder<ItemViewModel> {
-
-        TextView textView;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-
-            textView = (TextView) itemView;
-        }
+        holder.textView.setText(title);
     }
 
     @Override
@@ -62,13 +54,26 @@ public class ItemViewModel extends BaseViewModel<String, ItemViewModel.ViewHolde
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ItemViewModel itemViewModel = (ItemViewModel) o;
+        SubheaderView that = (SubheaderView) o;
 
-        return text != null ? text.equals(itemViewModel.text) : itemViewModel.text == null;
+        return title != null ? title.equals(that.title) : that.title == null;
     }
 
     @Override
     public int hashCode() {
-        return text != null ? text.hashCode() : 0;
+        return title != null ? title.hashCode() : 0;
+    }
+
+    static class ViewHolder extends BaseViewHolder {
+
+        @BindView(R.id.textView)
+        TextView textView;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+
+            ButterKnife.bind(this, itemView);
+
+        }
     }
 }
