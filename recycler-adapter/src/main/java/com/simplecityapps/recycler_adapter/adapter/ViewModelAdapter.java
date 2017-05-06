@@ -24,9 +24,9 @@ import rx.schedulers.Schedulers;
  * <p>
  * To allow the RecyclerView to perform its animations, use {@link #setItems(List)}
  */
-public class ItemAdapter extends RecyclerView.Adapter {
+public class ViewModelAdapter extends RecyclerView.Adapter {
 
-    private static final String TAG = "ItemAdapter";
+    private static final String TAG = "ViewModelAdapter";
 
     /**
      * The dataset for this RecyclerView Adapter
@@ -44,7 +44,7 @@ public class ItemAdapter extends RecyclerView.Adapter {
 
         for (ViewModel item : items) {
             if (viewType == item.getViewType()) {
-                return item.getViewHolder(parent);
+                return item.createViewHolder(parent);
             }
         }
         throw new IllegalStateException("No ViewHolder found for viewType: " + viewType);
@@ -84,8 +84,8 @@ public class ItemAdapter extends RecyclerView.Adapter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(diffResult -> {
-                    ItemAdapter.this.items = items;
-                    diffResult.dispatchUpdatesTo(ItemAdapter.this);
+                    ViewModelAdapter.this.items = items;
+                    diffResult.dispatchUpdatesTo(ViewModelAdapter.this);
 
                     if (BuildConfig.DEBUG)
                         diffResult.dispatchUpdatesTo(new ListUpdateCallback() {

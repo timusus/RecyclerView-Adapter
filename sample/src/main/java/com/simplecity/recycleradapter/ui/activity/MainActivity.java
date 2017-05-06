@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.simplecity.recycleradapter.R;
 import com.simplecity.recycleradapter.ui.viewmodel.ItemViewModel;
-import com.simplecityapps.recycler_adapter.adapter.ItemAdapter;
+import com.simplecityapps.recycler_adapter.adapter.ViewModelAdapter;
 import com.simplecityapps.recycler_adapter.model.ViewModel;
 
 import java.util.ArrayList;
@@ -37,13 +37,13 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ItemAdapter itemAdapter = new ItemAdapter();
-        recyclerView.setAdapter(itemAdapter);
+        ViewModelAdapter viewModelAdapter = new ViewModelAdapter();
+        recyclerView.setAdapter(viewModelAdapter);
 
         List<ViewModel> items = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             items.add(new ItemViewModel(String.format("Item: %d", i + 1)));
         }
-        itemAdapter.setItems(items);
+        viewModelAdapter.setItems(items);
     }
 }

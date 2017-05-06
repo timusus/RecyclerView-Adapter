@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface ViewModel<T, H extends RecyclerView.ViewHolder> extends ContentsComparator {
 
-    @ViewType
     int getViewType();
 
     @LayoutRes
@@ -18,7 +17,7 @@ public interface ViewModel<T, H extends RecyclerView.ViewHolder> extends Content
 
     void bindView(H holder, int position, List payloads);
 
-    H getViewHolder(ViewGroup parent);
+    H createViewHolder(ViewGroup parent);
 
     T getItem();
 

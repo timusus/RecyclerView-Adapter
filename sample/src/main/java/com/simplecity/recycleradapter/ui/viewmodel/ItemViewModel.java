@@ -35,15 +35,15 @@ public class ItemViewModel extends BaseViewModel<String, ItemViewModel.ViewHolde
     }
 
     @Override
+    public ViewHolder createViewHolder(ViewGroup parent) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false));
+    }
+
+    @Override
     public void bindView(ViewHolder holder) {
         super.bindView(holder);
 
         holder.textView.setText(text);
-    }
-
-    @Override
-    public ViewHolder getViewHolder(ViewGroup parent) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false));
     }
 
     static class ViewHolder extends BaseViewHolder<ItemViewModel> {
