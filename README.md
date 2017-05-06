@@ -59,7 +59,7 @@ Now just let implement the required methods using Android Studio's auto-fix feat
 
 Now it's time to define how the `ViewModel` will present itself to the `Adapter`.
 
-Specify which layout id will be used
+Specify which layout id will be used. Note: If you prefer to create layouts programmatically, you don't need to override this method. You will need to override `getViewType()` though.
 ```java
 @Override
 public int getLayoutResId() {
@@ -67,19 +67,11 @@ public int getLayoutResId() {
 }
 ```
 
-An id that is unique per type of view being adapted. (Usually the layout res id is sufficient)
-```java
-@Override
-public int getViewType() {
-    return getLayoutResId();
-}
-```
-
 Create an instance of the `ViewHolder`
 ```java
 @Override
 public ViewHolder createViewHolder(ViewGroup parent) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false));
+    return new ViewHolder(createView(parent));
 }
 ```
 
@@ -94,7 +86,7 @@ public void bindView(ViewHolder holder) {
 }
 ```
 
-OK, now we've created a `ViewHolder`, defined which layout we're going to use, how the model should be bound to the `ViewHolder` views, and specified a view type, so the `RecyclerView` knows how to recycle our views. We're ready to go.
+OK, now we've created a `ViewHolder`, defined which layout we're going to use and how the model should be bound to the `ViewHolder` views. We're ready to go.
 
 Back in our controller (`Activity`/`Fragment`/`ViewGroup`/whatever), we just attach a `ViewModelAdapter` to the `RecyclerView`:
 
@@ -106,7 +98,7 @@ recyclerView.setAdapter(adapter);
 Let's say we have an array of Strings we want to adapt:
 ```java
 String[] strings = new String[] {
-"Etherum", "Monero", "Zcash", "Dash", "Bitcoin", "LiteCoin", "Golem", "Sia"
+"Ethereum", "Monero", "Zcash", "Dash", "Bitcoin", "LiteCoin", "Golem", "Sia"
 }
 ```
 

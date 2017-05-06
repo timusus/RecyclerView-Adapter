@@ -1,6 +1,7 @@
 package com.simplecityapps.recycler_adapter.model;
 
 import android.support.annotation.CallSuper;
+import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,12 @@ import com.simplecityapps.recycler_adapter.recyclerview.BaseViewHolder;
 
 import java.util.List;
 
-public abstract class BaseViewModel<T, VH extends BaseViewHolder> implements
-        ViewModel<T, VH>,
+public abstract class BaseViewModel<VH extends BaseViewHolder> implements
+        ViewModel<VH>,
         ContentsComparator {
+
+    @LayoutRes
+    public abstract int getLayoutResId();
 
     @Override
     public int getViewType() {
@@ -31,7 +35,7 @@ public abstract class BaseViewModel<T, VH extends BaseViewHolder> implements
         }
     }
 
-    public View createView(ViewGroup parent) {
+    protected View createView(ViewGroup parent) {
         return LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false);
     }
 
