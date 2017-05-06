@@ -94,7 +94,7 @@ public class CryptoActivity extends AppCompatActivity implements CryptoView {
     public void showPopup(CryptoCurrency cryptoCurrency) {
         new AlertDialog.Builder(this)
                 .setTitle(String.format("%s. %s", cryptoCurrency.rank, cryptoCurrency.symbol))
-                .setMessage(String.format("-Name: %s\n-Market cap: $%s", cryptoCurrency.name, cryptoCurrency.marketCap))
+                .setMessage(String.format("- Name: %s\n- Market cap: $%s", cryptoCurrency.name, cryptoCurrency.marketCap))
                 .show();
     }
 }
