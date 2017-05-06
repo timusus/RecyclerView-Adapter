@@ -10,7 +10,7 @@ This makes it easy to use the same `ItemAdapter` class whenever you have a `Recy
 
 Creating headers and footers now becomes as simple as creating a `HeaderViewModel` and `FooterViewModel` class, and adding them to you dataset:
 
-``` java
+```java
 List<ViewModel> items = new ArrayList<>();
 
 items.add(headerViewModel);
@@ -34,7 +34,7 @@ Create a `ViewModel`, to wrap the model you're going to display in the `Recycler
 
 For example, a ViewModel that just wraps a string:
 
-```
+```java
 // First generic type param is the model, second is the ViewHolder
 public class ItemViewModel extends BaseViewModel<String, ItemViewModel.ViewHolder>
 
@@ -62,7 +62,7 @@ Now just let implement the required methods using Android Studio's auto-fix feat
 Now it's time to define how the `ViewModel` will present itself to the `Adapter`.
 
 Specify which layout id will be used
-```
+```java
 @Override
 public int getLayoutResId() {
     return R.layout.list_item;
@@ -70,7 +70,7 @@ public int getLayoutResId() {
 ```
 
 An id that is unique per type of view being adapted. (Usually the layout res id is sufficient)
-```
+```java
 @Override
 public int getViewType() {
     return getLayoutResId();
@@ -78,7 +78,7 @@ public int getViewType() {
 ```
 
 Create an instance of the `ViewHolder`
-```
+```java
 @Override
 public ViewHolder createViewHolder(ViewGroup parent) {
     return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false));
@@ -86,7 +86,7 @@ public ViewHolder createViewHolder(ViewGroup parent) {
 ```
 
 Define how the `ViewHolder` should be bound
-```
+```java
 @Override
 public void bindView(ViewHolder holder) {
     super.bindView(holder);
@@ -100,13 +100,13 @@ OK, now we've created a `ViewHolder`, defined which layout we're going to use, h
 
 Back in our controller (`Activity`/`Fragment`/`ViewGroup`/whatever), we just attach a `ViewModelAdapter` to the `RecyclerView`:
 
-```
+```java
 ViewModelAdapter adapter = new ViewModelAdapter();
 recyclerView.setAdapter(adapter);
 ```
 
 Let's say we have an array of Strings we want to adapt:
-```
+```java
 String[] strings = new String[] {
 "Etherum", "Monero", "Zcash", "Dash", "Bitcoin", "LiteCoin", "Golem", "Sia"
 }
@@ -114,7 +114,7 @@ String[] strings = new String[] {
 
 We just need to create a List of `ItemViewModels` to wrap our strings, and pass that to the adapter:
 
-```
+```java
 List<ViewModel> viewModels = new ArrayList<>();
 for (String string: strings){
     viewModels.add(new ViewModel(string));
