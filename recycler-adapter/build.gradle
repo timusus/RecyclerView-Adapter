@@ -30,3 +30,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
 }
+
+//To deploy, re-comment following line & run ./gradlew clean assembleRelease install bintrayUpload
+//apply from : 'deploy.gradle'
