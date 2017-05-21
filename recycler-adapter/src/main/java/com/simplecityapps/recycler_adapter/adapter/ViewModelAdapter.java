@@ -129,6 +129,17 @@ public class ViewModelAdapter extends RecyclerView.Adapter {
     }
 
     /**
+     * Add a list of items to the dataset, notifying the adapter of the insert(s).
+     *
+     * @param items the {@link List<ViewModel>} to add
+     */
+    public void addItems(List<ViewModel> items) {
+        int previousitemCount = this.items.size();
+        this.items.addAll(items);
+        notifyItemRangeInserted(previousitemCount, items.size());
+    }
+
+    /**
      * Remove & return the item at items[position]
      *
      * @param position int
@@ -169,7 +180,7 @@ public class ViewModelAdapter extends RecyclerView.Adapter {
         items.add(toPosition, model);
         notifyItemMoved(fromPosition, toPosition);
     }
-    
+
     private static class DiffCallback extends DiffUtil.Callback {
 
         private List<ViewModel> oldList;
