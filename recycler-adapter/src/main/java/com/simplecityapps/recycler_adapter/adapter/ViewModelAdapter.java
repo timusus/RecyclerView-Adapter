@@ -169,13 +169,7 @@ public class ViewModelAdapter extends RecyclerView.Adapter {
         items.add(toPosition, model);
         notifyItemMoved(fromPosition, toPosition);
     }
-
-    public void setEmpty(ViewModel emptyView) {
-        List<ViewModel> items = new ArrayList<>(1);
-        items.add(emptyView);
-        setItems(items);
-    }
-
+    
     private static class DiffCallback extends DiffUtil.Callback {
 
         private List<ViewModel> oldList;
