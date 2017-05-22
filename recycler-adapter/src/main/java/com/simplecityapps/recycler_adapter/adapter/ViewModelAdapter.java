@@ -154,9 +154,9 @@ public class ViewModelAdapter extends RecyclerView.Adapter {
      * @param items the {@link List<ViewModel>} to add
      */
     public void addItems(List<ViewModel> items) {
-        int previousitemCount = this.items.size();
+        int previousItemCount = this.items.size();
         this.items.addAll(items);
-        notifyItemRangeInserted(previousitemCount, items.size());
+        notifyItemRangeInserted(previousItemCount, items.size());
     }
 
     /**
