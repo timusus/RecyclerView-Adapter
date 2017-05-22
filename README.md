@@ -1,5 +1,6 @@
 ### RecyclerView Adapter
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.simplecityapps/recyclerview-adapter/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.simplecityapps/recyclerview-adapter) [![API](https://img.shields.io/badge/API-16%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=16)
 [![License](http://img.shields.io/badge/license-APACHE2-blue.svg)](NOTICE)
 
 This library is designed to help separate the creation and binding of views being adapted by a `RecyclerView Adapter`, from the `Adapter` itself.
@@ -21,6 +22,9 @@ viewModelAdapter.setItems(items);
 The adapter supports diffing between different sets of `ViewModels` (via the `ContentsComparator` interface). Diff results are automatically calculated (on the background thread) and supplied to the `ViewModelAdapter`, which performs the appropriate remove, move & insert `RecyclerView` animations.
 
 `SpanSizeLookup` can be applied to a `GridLayoutManager`, meaning the span size can be defined in the `ViewModel`.
+
+### Gradle
+`compile 'com.simplecityapps:recyclerview-adapter:1.0.1'`
 
 #### Usage
 
